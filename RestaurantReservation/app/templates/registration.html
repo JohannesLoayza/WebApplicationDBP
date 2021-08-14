@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block title %} Registration {% endblock %}
+{% block content%}
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='registration_style.css')}}" >
+    <h2>Get started!</h2>
+    <p>¿Primera ves aca? ¡Registrate!</p>
+    <p>
+        <a href="{{ url_for('index') }}">Regresar al inicio</a>
+    </p>
+    <form id="registration">
+        
+
+        <p class="campo">
+            <label for="usuario" >Usuario: </label><br />
+            <input type="text" name="user" id="usuario" placeholder="Usuario">
+        </p>
+
+        <p id="error1" class="hidden1" style="color:red"></p>
+
+        <p class="campo">
+            <label for="nombres" >Nombres: </label><br />
+            <input type="text" name="nombres" id="nombres" placeholder="Nombres">
+        </p>
+        
+        <p class="campo">
+            <label for="apellidos" >Apellidos: </label><br />
+            <input type="text" name="apellidos" id="apellidos" placeholder="Apellidos">
+        </p>
+
+        <p class="campo">
+            <label for="email">Correo Electronico: </label><br />
+            <input type="email" name="email" id="correo" placeholder="Correo Electronico">
+        </p>
+        <p id="error3" class="hidden3" style="color:red"></p>
+        <p class="campo">
+            <label for="password">Password: </label><br />
+            <input type="password" name="password" id="pass" placeholder="Password">
+        </p>
+
+        <p id="error2" class="hidden2" style="color:red"></p>
+        <p id="error" class="hidden" style="color:red">Posible error: usuario o contraseña ya existente</p>
+
+        <p class="campo enviar">
+            <input type="hidden" id="tipo" value="crear"> <br />
+            <input type="submit" class="boton" value="Crear cuenta">
+        </p>
+    </form>
+
+    <!--JAVASCRIPT-FETCH-->
+    <script>
+        document.getElementById("registration").onsubmit = function(reg){//evento del boton, implementamos en una funcion
+            reg.preventDefault();
+            fetch('/users/create', {
+                method:'POST',
+                body: JSON.stringify({
+                    //key- name:value-id
+                    'user':document.getElementById('usuario').value,
+                    'nombres':document.getElementById('nombres').value,
+                    'apellidos':document.getElementById('apellidos').value,
+                    'email':document.getElementById('correo').value,
+                    'password':document.getElementById('pass').value
+                }),
+                headers: {
+                    'Content-Type':'application/json'
+                }
+            }).then(function(response){
+                return response.json()
+            }).then(function(jsonResponse){
+                console.log(jsonResponse)
+                if(jsonResponse['error1']===false){
+                    document.getElementById("error1").className='hidden1'
+                }else{
+                    document.getElementById("error1").className=''
+                    document.getElementById("error1").innerHTML=jsonResponse['error_message1']
+                }
+
+                if(jsonResponse['error2']===false){
+                    document.getElementById("error2").className='hidden2'
+                }else{
+                    document.getElementById("error2").className=''
+                    document.getElementById("error2").innerHTML=jsonResponse['error_message2']
+                }
+
+                if(jsonResponse['error3']===false){
+                    document.getElementById("error3").className='hidden3'
+                }else{
+                    document.getElementById("error3").className=''
+                    document.getElementById("error3").innerHTML=jsonResponse['error_message3']
+                }
+
+                if(jsonResponse['error']===false){
+                    window.location.href = "/login"
+                    document.getElementById("error").className='hidden'
+                }else{
+                    document.getElementById("error").className=''
+                    document.getElementById("error").innerHTML=jsonResponse['error_message']
+                }
+            });
+        };
+    </script>
+
+    <p>¿Ya estas registrado? <a href="/login">Ingresa aca</a>.</p>
+{% endblock%}

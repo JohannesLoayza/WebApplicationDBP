@@ -1,0 +1,75 @@
+  
+{%  extends "base.html" %}
+{% block content %}
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='status_style.css')}}" >
+    <p>
+        <a href="{{ url_for('index') }}">Regresar al inicio</a>
+    </p>
+
+    <h2 class="title">
+        Welcome, {{ user_name }}!
+    </h2>
+
+    <form action="" method="POST" id="reservation_status">
+
+        <p class="campo">
+            <label for="celular" >Num. celular: </label><br />
+            <input type="text" name="celular" id="celular" placeholder="Celular">
+        </p>
+
+        <p>
+            <label for="date">Ingrese el numero de invitados: </label><br />
+            <select name="numberperson" id="numberperson">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="7">8</option>
+            </select>
+        </p>
+
+        <p>
+            <label for="date">Ingrese la fecha y hora: </label><br />
+            <input type="datetime-local" name="date" id="date"/><br>
+        </p>
+        <p id="error" class="hidden" style="color:red"></p>
+
+        <p>
+            <input type="submit" class = "boton" value="CREAR RESERVACION" id="input_crear">
+        </p>
+
+
+    </form>
+
+        <!--JAVASCRIPT-FETCH-->
+    <script>
+        document.getElementById("reservation_status").onsubmit = function(reg){//evento del boton, implementamos en una funcion
+            reg.preventDefault();
+            fetch('/users/reservation_status', {
+                method:'POST',
+                body: JSON.stringify({
+                    //key- name:value-id
+                    'celular':document.getElementById('celular').value,
+                    'numberperson':document.getElementById('numberperson').value,
+                    'date':document.getElementById('date').value,
+                }),
+                headers: {
+                    'Content-Type':'application/json'
+                }
+            }).then(function(response){
+                return response.json()
+            }).then(function(jsonResponse){
+                console.log(jsonResponse)
+                if(jsonResponse['error']===false){
+                    window.location.href = "/login"
+                }else{
+                    document.getElementById("error").className=''
+                    document.getElementById("error").innerHTML=jsonResponse['error_message']
+                }
+            });
+        };
+    </script>
+{% endblock %}

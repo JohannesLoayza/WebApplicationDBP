@@ -1,0 +1,60 @@
+body {
+    background: url(../static/imagen_restaurante.jpg) no-repeat center top;
+    background-size: cover;
+    height: 100vh;
+}
+
+h1{
+    color: #ffffff;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
+    font-size: 50px; 
+    padding-bottom: 90px;
+    text-align: center;
+}
+
+p {
+    color: #a1a1a1;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
+    font-size: 15px; 
+    font-weight: bold;
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+a{
+    color: aqua;
+}
+
+input{
+    background-color: rgba(255, 255, 255);
+    color: #000;
+    padding: 5px;
+    border: 3px solid #a1a1a1;
+    border-radius: 4px;
+    text-align: center;
+    font-family: 'Gill Sans', Calibri, sans-serif;
+}
+
+select{
+    background-color: #a1a1a1;
+    color: #ffffff;
+    font-family: 'Gill Sans', Calibri, sans-serif;
+    font-size: 15px; 
+    font-weight: bold;
+    border-radius: 4px;
+    border: 3px solid a1a1a1;
+}
+
+#input_crear{
+    color: #ffffff; 
+    font-family: 'Gill Sans', Calibri, sans-serif;
+    font-size: 15px; 
+    font-weight: bold;
+    border-radius: 4px;
+    width: 200px;
+    padding: 10px;
+    border: none;
+    background-color: #a87c49;
+}
+
+

@@ -1,0 +1,27 @@
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='show_style.css')}}" >
+    <p>
+        <a href="{{ url_for('admin') }}">Regresar al Admin</a>
+    </p>
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Capacidad</th>
+        </tr>
+        {% for mesa in mesas %}
+        <tr>
+            <td>{{ mesa.id }}</td>
+            <td>{{ mesa.capacidad }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <p>
+        <b>Agregar mesa:</b>
+        <form action="" method="POST" name="agregar_mesa">
+            Capacity:
+            {{ form.capacidad_mesa }}<br />
+            <input type="submit" value="Agregar mesa">
+        </form>
+    </p>
+{% endblock %}
